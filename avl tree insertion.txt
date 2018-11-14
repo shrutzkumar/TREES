@@ -1,0 +1,105 @@
+#include <stdio.h>
+struct Node
+{
+  int data;
+  struct Node* left;
+  struct Node* right;
+  int height;
+};
+/*void balancefactor(struct Node* r)
+{
+    
+}*/
+struct Node* insert(struct Node* r,int val,int* added)
+{
+    if(r == NULL)
+    {
+        r = (struct Node*)malloc(sizeof(struct Node));
+        r->data = val;
+        r->height = 0;
+        return r;
+    }
+    else
+    {
+        if(val<r->data)
+        {
+            if(r->left == NULL)
+            {
+                struct Node* newnode = (struct Node*)malloc(sizeof(struct Node));
+                int* add;
+                add = added;
+                newnode->data = val;
+                r->left = newnode;
+                newnode->height = 0;       
+                if(r->height == 0)
+                {
+                    //leaf node
+                    r->height = 1;
+                    printf("setting added for newnode %d %d",r->data,r->height);
+                    *add = 1;
+            
+                }
+                else if(r->height)
+                {
+                    *add = 0;
+                }
+                return;
+            }
+            else
+            {
+                insert(r->left,val,added);
+            
+            }
+        }
+        else if(val > r-> data)
+        {
+            if(r->right == NULL)
+            {
+                struct Node* newnode = (struct Node*)malloc(sizeof(struct Node));
+                int* add;
+                add = added;
+                newnode->data = val;
+                r->right = newnode;
+                newnode->height = 0;
+                if(r->height == 0)
+                {
+                    //leaf node
+                    r->height = 1;
+                    *add = 1;
+                
+                }
+                else if(r->height)
+                {
+                    *add=0;
+                }
+                return;
+            }
+            else
+            {
+                insert(r->right,val,added);
+                
+            }
+        }
+    }
+    printf("added poimter holds val %d",*added);
+   // if(balancefactor(r) < )
+   if(*added)
+   {
+       r->height = r->height +1;
+   }
+   printf("r->data %d r->height %d",r->data,r->height);
+}
+int main()
+{
+    
+    struct Node* root; // = (struct Node*)malloc(sizeof(struct Node));
+    int add =0;
+    root = insert(root,50,&add);
+    insert(root,20,&add);
+    insert(root,60,&add);
+    insert(root,70,&add);
+    //printf("add holds %d",add);
+    return 0;
+}
+
+
